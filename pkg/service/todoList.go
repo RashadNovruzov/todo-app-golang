@@ -24,3 +24,11 @@ func (s *TodoListService) GetAll(userId int) ([]model.TodoList, error) {
 func (s *TodoListService) GetById(userId, listId int) (model.TodoList, error) {
 	return s.repo.GetById(userId, listId)
 }
+
+func (s *TodoListService) Update(userId, listId int, input model.UpdateListInput) error {
+	if err := input.Validate(); err != nil {
+		return err
+	}
+
+	return s.repo.Update(userId, listId, input)
+}
