@@ -32,3 +32,7 @@ func (s *TodoListService) Update(userId, listId int, input model.UpdateListInput
 
 	return s.repo.Update(userId, listId, input)
 }
+
+func (s *TodoListService) Delete(userId, listId int) error {
+	return s.repo.Delete(userId, listId)
+}

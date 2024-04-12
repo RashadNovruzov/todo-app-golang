@@ -94,3 +94,11 @@ func (r *TodoListPostgres) Update(userId, listId int, input model.UpdateListInpu
 	_, err := r.db.Exec(query, args...)
 	return err
 }
+
+func (r *TodoListPostgres) Delete(userId, listId int) error {
+	query := fmt.Sprintf("DELETE FROM %s tl USING %s ul WHERE tl.id = ul.list_id AND ul.user_id=$1 AND ul.list_id=$2",
+		todoListsTable, usersListsTable)
+	_, err := r.db.Exec(query, userId, listId)
+
+	return err
+}
