@@ -3,16 +3,26 @@ package main
 import (
 	"os"
 
-	"github.com/RoshkANovruzov/todo-app-golang"
 	"github.com/RoshkANovruzov/todo-app-golang/pkg/handler"
 	"github.com/RoshkANovruzov/todo-app-golang/pkg/repository"
 	"github.com/RoshkANovruzov/todo-app-golang/pkg/service"
+	server "github.com/RoshkANovruzov/todo-app-golang/server"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
+// @title Todo App API
+// @version 1.0
+// @description API Server for TodoList Application
+
+// @host localhost:8080
+// @BasePath /
+
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
 func main() {
 	// open a file
 	// f, err := os.OpenFile("test.log", os.O_APPEND|os.O_CREATE|os.O_RDWR, 0666)
@@ -48,7 +58,7 @@ func main() {
 	repos := repository.NewRepository(db)
 	services := service.NewService(repos)
 	handlers := handler.NewHandler(services)
-	server := new(todo.Server)
+	server := new(server.Server)
 	if err := server.Run(viper.GetString("app.port"), handlers.InitRoutes()); err != nil {
 		logrus.Fatalf("error occured while running http server: %s", err.Error())
 	}
