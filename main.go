@@ -1,7 +1,7 @@
 package main
 
 import (
-	"os"
+	// "os"
 
 	"github.com/RoshkANovruzov/todo-app-golang/pkg/handler"
 	"github.com/RoshkANovruzov/todo-app-golang/pkg/repository"
@@ -48,7 +48,8 @@ func main() {
 		Host:     viper.GetString("db.host"),
 		Port:     viper.GetString("db.port"),
 		Username: viper.GetString("db.username"),
-		Password: os.Getenv("DB_PASSWORD"),
+		// Password: os.Getenv("DB_PASSWORD"),
+		Password: viper.GetString("db.password"),
 		SSLMode:  viper.GetString("db.sslmode"),
 		DBName:   viper.GetString("db.dbname"),
 	})
