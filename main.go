@@ -3,6 +3,9 @@ package main
 import (
 	// "os"
 
+	"fmt"
+	"os"
+
 	"github.com/RoshkANovruzov/todo-app-golang/pkg/handler"
 	"github.com/RoshkANovruzov/todo-app-golang/pkg/repository"
 	"github.com/RoshkANovruzov/todo-app-golang/pkg/service"
@@ -25,16 +28,16 @@ import (
 // @name Authorization
 func main() {
 	// open a file
-	// f, err := os.OpenFile("test.log", os.O_APPEND|os.O_CREATE|os.O_RDWR, 0666)
-	// if err != nil {
-	// 	fmt.Printf("error opening file: %v", err)
-	// }
+	f, err := os.OpenFile("logs/test.log", os.O_APPEND|os.O_CREATE|os.O_RDWR, 0666)
+	if err != nil {
+		fmt.Printf("error opening file: %v", err)
+	}
 
-	// // don't forget to close it
-	// defer f.Close()
+	// don't forget to close it
+	defer f.Close()
 
-	// // assign it to the standard logger
-	// logrus.SetOutput(f)
+	// assign it to the standard logger
+	logrus.SetOutput(f)
 
 	logrus.SetFormatter(new(logrus.JSONFormatter))
 
@@ -45,13 +48,13 @@ func main() {
 		logrus.Fatalf("error occured while reading config file %s", err.Error())
 	}
 	db, err := repository.NewPostgresDB(repository.DBConfig{
-		Host:     viper.GetString("db.host"),
+		Host:     os.Getenv("DB_HOST"),
 		Port:     viper.GetString("db.port"),
 		Username: viper.GetString("db.username"),
-		// Password: os.Getenv("DB_PASSWORD"),
-		Password: viper.GetString("db.password"),
-		SSLMode:  viper.GetString("db.sslmode"),
-		DBName:   viper.GetString("db.dbname"),
+		Password: os.Getenv("DB_PASSWORD"),
+		// Password: viper.GetString("db.password"),
+		SSLMode: viper.GetString("db.sslmode"),
+		DBName:  viper.GetString("db.dbname"),
 	})
 	if err != nil {
 		logrus.Fatalf("failed to initialize db: %s", err.Error())
