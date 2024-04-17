@@ -1,0 +1,17 @@
+version: "1"
+
+services:
+  todo-app:
+    image: todo-app
+    ports:
+      - 8080:8080
+    extra_hosts: 
+      - "host.docker.internal:host-gateway"
+    env_file: 
+      - .env
+    networks:
+      - go-app
+
+networks:
+  go-app:
+    driver: bridge

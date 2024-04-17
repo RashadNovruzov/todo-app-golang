@@ -3,7 +3,7 @@ app:
 
 db:
   username: postgres
-  host: localhost
+  host:  host.docker.internal
   port: 5432
   dbname: todo-app
   sslmode: disable
