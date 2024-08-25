@@ -33,10 +33,8 @@ func main() {
 		fmt.Printf("error opening file: %v", err)
 	}
 
-	// don't forget to close it
 	defer f.Close()
-
-	// assign it to the standard logger
+	
 	logrus.SetOutput(f)
 
 	logrus.SetFormatter(new(logrus.JSONFormatter))
